@@ -1,6 +1,7 @@
 import streamlit as st
 from utils import transcribe_audio, summarize_transcript
 import theme
+from audio_recorder import AudioRecorder
 
 
 
@@ -20,6 +21,14 @@ models = ["gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4-0613"]
 model = st.selectbox("Select a model:", models)
 
 uploaded_audio = st.file_uploader("Upload an audio file", type=['m4a', 'mp3', 'webm', 'mp4', 'mpga', 'wav', 'mpeg'], accept_multiple_files=False)
+
+audio_recorder = AudioRecorder()
+audio_file = audio_recorder()
+
+if audio_file:
+    transcript = transcribe_audio(api_key, audio_file)
+    # ...
+
 
 custom_prompt = None
 
